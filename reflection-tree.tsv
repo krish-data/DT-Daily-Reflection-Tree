@@ -1,0 +1,39 @@
+id	parentId	type	text	options	target	signal
+START	null	start	Good evening. Let's look at your day.			none
+OPEN_WORD	START	question	How would you describe today overall?	Productive|Mixed|Heavy|Frustrating		
+OPEN_ROUTE	OPEN_WORD	decision		answer=Productive|Mixed:A1_Q1_HIGH;answer=Heavy|Frustrating:A1_Q1_LOW		
+A1_Q1_HIGH	OPEN_ROUTE	question	You said "{OPEN_WORD.answer}". When something went well today, what best explains it?	I prepared and followed through|I adapted when things changed|I stayed focused on what I could control|Others carried most of it		axis1:internal
+A1_Q1_LOW	OPEN_ROUTE	question	You said "{OPEN_WORD.answer}". When things became difficult, what was your first instinct?	Figure out what I could still control|Wait for someone else to fix it|Feel stuck and replay the problem|Adapt and try another path		axis1:external
+A1_D1	A1_Q1_HIGH	decision		answer=I prepared and followed through|I adapted when things changed|I stayed focused on what I could control:A1_Q2_INT;answer=Others carried most of it:A1_Q2_MIX		
+A1_D1B	A1_Q1_LOW	decision		answer=Figure out what I could still control|Adapt and try another path:A1_Q2_INT;answer=Wait for someone else to fix it|Feel stuck and replay the problem:A1_Q2_EXT		
+A1_Q2_INT	A1_D1	question	When a plan broke down today, what did you do next?	Reworked the plan myself|Asked for help and kept moving|Accepted the setback and adjusted priorities|Waited for instructions		axis1:internal
+A1_Q2_MIX	A1_D1	question	Even if others helped, where did you have the most influence today?	My preparation|My response under pressure|My communication|Honestly, very little		axis1:internal
+A1_Q2_EXT	A1_D1B	question	Looking back, where was your biggest loss of control?	External delays|Other people's decisions|My own hesitation|I didn't really have any choice		axis1:external
+A1_R_INT	A1_Q2_INT	reflection	You showed agency today. Even when conditions changed, you kept looking for the next move available to you.			axis1:internal
+A1_R_MIX	A1_Q2_MIX	reflection	You can see that outcomes were shared, but your preparation and response still mattered. That's a healthy form of agency.			axis1:internal
+A1_R_EXT	A1_Q2_EXT	reflection	Today may have felt controlled by outside forces. Even so, there were still small choices in response, pacing, or communication. Agency often starts there.			axis1:external
+BRIDGE_1_2_A	A1_R_INT	bridge	Now let's shift from how you handled events to what you contributed.		A2_OPEN	
+BRIDGE_1_2_B	A1_R_MIX	bridge	Now let's shift from how you handled events to what you contributed.		A2_OPEN	
+BRIDGE_1_2_C	A1_R_EXT	bridge	Now let's shift from how you handled events to what you contributed.		A2_OPEN	
+A2_OPEN	null	question	Think about one meaningful interaction today. What stands out most?	I helped without being asked|I shared knowledge or context|I wanted more recognition|I felt others should have done more		none
+A2_ROUTE	A2_OPEN	decision		answer=I helped without being asked|I shared knowledge or context:A2_Q1_CONTRIB;answer=I wanted more recognition|I felt others should have done more:A2_Q1_ENT		
+A2_Q1_CONTRIB	A2_ROUTE	question	What motivated that action?	I wanted the work to move forward|Someone clearly needed help|It felt right even if unnoticed|I hoped it would be appreciated later		axis2:contribution
+A2_Q1_ENT	A2_ROUTE	question	What was the strongest feeling underneath that moment?	I wasn't being valued enough|I was carrying more than others|I wanted credit for what I did|I was frustrated others weren't meeting the standard		axis2:entitlement
+A2_Q2_CONTRIB	A2_Q1_CONTRIB	question	Which statement best matches your mindset today?	My role is to improve the whole, not just my task|Helping others is part of good work|I try to leave processes better than I found them|I mainly focused on whether my effort was noticed		axis2:contribution
+A2_Q2_ENT	A2_Q1_ENT	question	When you felt frustrated, what mattered most?	What I was owed|Whether my effort was visible|Whether others matched my standard|Whether the work actually improved		axis2:entitlement
+A2_R_CONTRIB	A2_Q2_CONTRIB	reflection	Your orientation today leaned toward contribution. You were focused on adding value, not just tracking what came back to you.			axis2:contribution
+A2_R_ENT	A2_Q2_ENT	reflection	Part of you may have been keeping score today. That's human. The useful question is: what contribution would have made the situation better anyway?			axis2:entitlement
+BRIDGE_2_3_A	A2_R_CONTRIB	bridge	Let's widen the lens one more time — from what you gave to who you held in mind.		A3_OPEN	
+BRIDGE_2_3_B	A2_R_ENT	bridge	Let's widen the lens one more time — from what you gave to who you held in mind.		A3_OPEN	
+A3_OPEN	null	question	When you think about today's biggest challenge, who comes to mind first?	Just me and my workload|My team and shared deadline|A colleague who may have struggled more|The customer or end user affected by the work		none
+A3_ROUTE	A3_OPEN	decision		answer=Just me and my workload:A3_Q1_SELF;answer=My team and shared deadline|A colleague who may have struggled more|The customer or end user affected by the work:A3_Q1_WIDE		
+A3_Q1_SELF	A3_ROUTE	question	What best describes your focus during that challenge?	Protecting my energy and time|Getting my part done first|Reducing my own stress|I did not think much beyond my situation		axis3:self
+A3_Q1_WIDE	A3_ROUTE	question	What best describes your focus during that challenge?	Helping the team recover|Understanding another person's constraints|Keeping the customer outcome in mind|Balancing my needs with a wider outcome		axis3:altro
+A3_Q2_SELF	A3_Q1_SELF	question	If you replay that moment, what would have widened your frame?	Considering team impact earlier|Checking how someone else was affected|Thinking about the final user|I still think my own issue was the only relevant one		axis3:self
+A3_Q2_WIDE	A3_Q1_WIDE	question	Which statement feels most true?	Meaning comes from serving something bigger than myself|Perspective-taking improved my decisions|Shared success mattered more than individual comfort|I still found it hard to look beyond my own pressure		axis3:altro
+A3_R_SELF	A3_Q2_SELF	reflection	Today your frame was narrow, probably because the day felt heavy. A wider radius of concern often reduces pressure because it reconnects effort to meaning.			axis3:self
+A3_R_ALTRO	A3_Q2_WIDE	reflection	You showed a wider radius of concern today. That usually leads to better judgment, steadier emotion, and more meaningful work.			axis3:altro
+SUMMARY	A3_R_SELF	summary	Today you leaned {axis1.dominant} on agency, {axis2.dominant} on contribution, and {axis3.dominant} on radius. You began the session feeling "{OPEN_WORD.answer}". The next useful experiment is to choose one moment tomorrow where you act with more agency, contribute before keeping score, and widen your frame beyond yourself.			
+SUMMARY_B	A3_R_ALTRO	summary	Today you leaned {axis1.dominant} on agency, {axis2.dominant} on contribution, and {axis3.dominant} on radius. You began the session feeling "{OPEN_WORD.answer}". The next useful experiment is to deliberately repeat one behavior tomorrow that increased agency, contribution, or perspective-taking.			
+END	SUMMARY	end	See you tomorrow.			
+END_B	SUMMARY_B	end	See you tomorrow.			
