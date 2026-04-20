@@ -1,5 +1,11 @@
 # DeepThought Daily Reflection Tree — Submission Pack
+This project implements a deterministic reflection framework to analyze behavioral patterns across control, contribution, and perspective dimensions.
 
+It includes:
+- Structured decision tree logic (TSV)
+- Visual flow diagram
+- Design documentation
+- Optional interactive agent
 ## Files
 - `reflection-tree.tsv` — Part A tree as deterministic structured data
 - `tree-diagram.md` — Mermaid diagram of the conversation tree
